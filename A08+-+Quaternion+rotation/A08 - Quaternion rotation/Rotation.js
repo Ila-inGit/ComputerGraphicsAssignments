@@ -16,6 +16,8 @@ function updateWorld(rvx, rvy, rvz) {
 
 	this.euToquat(rvz, rvy, rvx);
 
+	//i could only use the rotation matrix as it has no traslation nor scaling 
+	// the world matrix == rotation matrix
 	var out = utils.MakeWorld(0, 0, 0, Yaw, Pitch, Roll, 1);
 
 	return out;
