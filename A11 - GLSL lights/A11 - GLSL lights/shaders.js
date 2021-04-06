@@ -6,7 +6,7 @@ function shaders() {
 //vec3  Pos;		// Position of first (or single) light
 //vec3  Dir;		// Direction of first (or single) light
 //float ConeOut;	// Outer cone (in degree) of the light (if spot)
-//float ConeIn;		// Inner cone (in percentage of the outher cone) of the light (if spot)
+//float ConeIn;		// Inner cone (in percentage of the outer cone) of the light (if spot)
 //float Decay;		// Decay factor (0, 1 or 2)
 //float Target;		// Target distance
 //vec4  lightColor;	// color of the first light
@@ -49,28 +49,58 @@ var S2 = `
 `;
 
 // Single spot light (without decay), constant ambient
+
 var S3 = `
-	
+    OlightDir = normalize(Pos - fs_pos);
+	OlightColor = lightColor *
+		clamp(( dot(normalize(Pos - fs_pos), normalize(-Dir)) - radians(ConeOut) ) / 
+						( radians(ConeOut) - radians(ConeIn * ConeOut)),0.0, 1.0);
+	ambientColor = ambientLightColor;
 `;
 
 // Single point light with decay
+// vect3 L = Pos - fs_pos
+//float distance = length(Pos - fs_pos)
+//OlightColor = lightColor * (1.0f / (1.0f + Decay * length(Pos - fs_pos)+ Decay * length(Pos - fs_pos)* length(Pos - fs_pos) )) ;
+
 var S4 = `
-	
+	OlightDir = normalize(Pos - fs_pos);
+	OlightColor = lightColor * ( 1.0f / (1.0f + Decay * length(Pos - fs_pos)) ) ;
 `;
 
 // Single spot light (with decay)
 var S5 = `
-	
+	OlightDir = normalize(Pos - fs_pos);
+	OlightColor = 
+		lightColor *
+		clamp(( dot(normalize(Pos - fs_pos), normalize(-Dir)) - radians(ConeOut) ) / 
+						( radians(ConeOut) - radians(ConeIn * ConeOut)),0.0, 1.0) *
+		( 1.0f / (1.0f + Decay * length(Pos - fs_pos)) );
 `;
 
 // Single point light, hemispheric ambient 
+
+//var lightVec  = normalize(Pos - fs_pos);
+//var costheta = dot(normalVec, lightVec);
+//var	a = 0.5 + 0.5 * dot(normalVec, lightVec);
+
 var S6 = `
-	
+
+	OlightDir = normalize(Pos - fs_pos);
+	OlightColor = lightColor;
+	ambientColor = mix(ambientLightColor, ambientLightLowColor,
+		0.5 + 0.5 * dot(normalVec, ADir));
+
 `;
 
 // Single spot light, spherical harmonics ambient
 var S7 = `
-
+	OlightDir = normalize(Pos - fs_pos);
+	OlightColor = lightColor *
+		clamp(( dot(normalize(Pos - fs_pos), normalize(-Dir)) - radians(ConeOut) ) / 
+						( radians(ConeOut) - radians(ConeIn * ConeOut)),0.0, 1.0);
+	
+	ambientColor = SHconstColor + normalVec.x*SHDeltaLxColor + normalVec.y*SHDeltaLyColor + normalVec.z*SHDeltaLzColor;	
 `;
 	return [S1, S2, S3, S4, S5, S6, S7];
 }
