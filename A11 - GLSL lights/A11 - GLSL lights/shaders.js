@@ -49,12 +49,16 @@ var S2 = `
 `;
 
 // Single spot light (without decay), constant ambient
+// OlightColor = lightColor *
+// 		clamp(( dot(normalize(Pos - fs_pos), normalize(-Dir)) - radians(ConeOut) ) / 
+// 						( radians(ConeOut) - radians(ConeIn * ConeOut)),0.0, 1.0);
+
 
 var S3 = `
     OlightDir = normalize(Pos - fs_pos);
 	OlightColor = lightColor *
-		clamp(( dot(normalize(Pos - fs_pos), normalize(-Dir)) - radians(ConeOut) ) / 
-						( radians(ConeOut) - radians(ConeIn * ConeOut)),0.0, 1.0);
+		clamp(( dot(normalize(Pos - fs_pos), Dir) - radians(ConeOut) ) / 
+			(radians(ConeOut) - radians(ConeIn * ConeOut)), 0.0, 1.0);
 	ambientColor = ambientLightColor;
 `;
 
@@ -65,17 +69,16 @@ var S3 = `
 
 var S4 = `
 	OlightDir = normalize(Pos - fs_pos);
-	OlightColor = lightColor * ( 1.0f / (1.0f + Decay * length(Pos - fs_pos)) ) ;
+	OlightColor = lightColor * pow( Target / length(Pos - fs_pos), Decay ) ;
 `;
 
 // Single spot light (with decay)
 var S5 = `
 	OlightDir = normalize(Pos - fs_pos);
-	OlightColor = 
-		lightColor *
-		clamp(( dot(normalize(Pos - fs_pos), normalize(-Dir)) - radians(ConeOut) ) / 
-						( radians(ConeOut) - radians(ConeIn * ConeOut)),0.0, 1.0) *
-		( 1.0f / (1.0f + Decay * length(Pos - fs_pos)) );
+	OlightColor = lightColor *
+		clamp(( dot(normalize(Pos - fs_pos), Dir) - radians(ConeOut) ) / 
+			(radians(ConeOut) - radians(ConeIn * ConeOut)), 0.0, 1.0) *
+		pow( Target / length(Pos - fs_pos), Decay ) ;
 `;
 
 // Single point light, hemispheric ambient 
@@ -97,8 +100,8 @@ var S6 = `
 var S7 = `
 	OlightDir = normalize(Pos - fs_pos);
 	OlightColor = lightColor *
-		clamp(( dot(normalize(Pos - fs_pos), normalize(-Dir)) - radians(ConeOut) ) / 
-						( radians(ConeOut) - radians(ConeIn * ConeOut)),0.0, 1.0);
+		clamp(( dot(normalize(Pos - fs_pos), Dir) - radians(ConeOut) ) / 
+			(radians(ConeOut) - radians(ConeIn * ConeOut)), 0.0, 1.0);
 	
 	ambientColor = SHconstColor + normalVec.x*SHDeltaLxColor + normalVec.y*SHDeltaLyColor + normalVec.z*SHDeltaLzColor;	
 `;
