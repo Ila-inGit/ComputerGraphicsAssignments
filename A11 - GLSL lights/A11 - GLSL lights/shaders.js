@@ -57,8 +57,8 @@ var S2 = `
 var S3 = `
     OlightDir = normalize(Pos - fs_pos);
 	OlightColor = lightColor *
-		clamp(( dot(normalize(Pos - fs_pos), Dir) - radians(ConeOut) ) / 
-			(radians(ConeOut) - radians(ConeIn * ConeOut)), 0.0, 1.0);
+		clamp(( dot(normalize(Pos - fs_pos), Dir) - cos(radians(ConeOut)) ) / 
+			(cos(radians(ConeIn * ConeOut)) - cos(radians(ConeOut))), 0.0, 1.0);
 	ambientColor = ambientLightColor;
 `;
 
@@ -76,9 +76,9 @@ var S4 = `
 var S5 = `
 	OlightDir = normalize(Pos - fs_pos);
 	OlightColor = lightColor *
-		clamp(( dot(normalize(Pos - fs_pos), Dir) - radians(ConeOut) ) / 
-			(radians(ConeOut) - radians(ConeIn * ConeOut)), 0.0, 1.0) *
-		pow( Target / length(Pos - fs_pos), Decay ) ;
+				clamp(( dot(normalize(Pos - fs_pos), Dir) - cos(radians(ConeOut)) ) / 
+							(cos(radians(ConeIn * ConeOut)) - cos(radians(ConeOut))), 0.0, 1.0) *
+				pow( Target / length(Pos - fs_pos), Decay ) ;
 `;
 
 // Single point light, hemispheric ambient 
@@ -100,8 +100,8 @@ var S6 = `
 var S7 = `
 	OlightDir = normalize(Pos - fs_pos);
 	OlightColor = lightColor *
-		clamp(( dot(normalize(Pos - fs_pos), Dir) - radians(ConeOut) ) / 
-			(radians(ConeOut) - radians(ConeIn * ConeOut)), 0.0, 1.0);
+		clamp(( dot(normalize(Pos - fs_pos), Dir) - cos(radians(ConeOut)) ) / 
+			(cos(radians(ConeIn * ConeOut)) - cos(radians(ConeOut))), 0.0, 1.0);
 	
 	ambientColor = SHconstColor + normalVec.x*SHDeltaLxColor + normalVec.y*SHDeltaLyColor + normalVec.z*SHDeltaLzColor;	
 `;
