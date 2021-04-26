@@ -1,13 +1,10 @@
 function Anim1(t) {
-  // buring flame
+  // moving car
+  //scale x 1/4 as it is divided by for main blocks
+  var A1 = utils.MakeScaleMatrix(0.25);
+  var A2 = utils.MakeTranslateMatrix(t, 2, 0);
+  var out = utils.multiplyMatrices(A1, A2);
 
-  var D1 = utils.MakeScaleMatrix(0.0625);
-
-  var o = 1 + (Math.floor(12 * t) % 12);
-  var v = 1 + (Math.floor(6 * t) % 6);
-  var out = utils.MakeTranslateMatrix(o, v, 0);
-
-  out = utils.multiplyMatrices(out, D1);
   return out;
 }
 
@@ -48,10 +45,16 @@ function Anim3(t) {
 }
 
 function Anim4(t) {
-  // moving car
-  //scale x 1/4 as it is divided by for main blocks
-  var A1 = utils.MakeScaleMatrix(0.25);
-  var A2 = utils.MakeTranslateMatrix(t, 2, 0);
-  var out = utils.multiplyMatrices(A1, A2);
+  // buring flame
+
+  var D1 = utils.MakeScaleMatrix(1 / 16);
+
+  var o = Math.floor(32 * t) % 12;
+  o = 0.01 + o * 0.0833333333333333333333333333;
+  var v = Math.floor(24 * t) % 6;
+  v = 0.01 + (5 - v) * 0.0833333333333333333333333333;
+  var out = utils.MakeTranslateMatrix(o, v, 0);
+
+  out = utils.multiplyMatrices(out, D1);
   return out;
 }
