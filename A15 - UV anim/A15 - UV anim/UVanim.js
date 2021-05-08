@@ -31,7 +31,8 @@ function Anim3(t) {
   var C2 = utils.MakeRotateYMatrix(90);
 
   var C3 = utils.MakeScaleMatrix(0.25);
-  var C4 = utils.MakeRotateXMatrix(360 * t);
+  // fattore 3 per aumentare la velocità di rotazione
+  var C4 = utils.MakeRotateXMatrix(360 * t * 3);
 
   var C22 = utils.invertMatrix(C2);
   var C11 = utils.MakeTranslateMatrix(-0.5, -0.5, 0);

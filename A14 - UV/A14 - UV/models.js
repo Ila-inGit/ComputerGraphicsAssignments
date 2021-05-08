@@ -1,5 +1,5 @@
 const sectorCount = 26;
-const height = 8;
+const height = 3;
 const cilinRadius = 2;
 
 function buildGeometry() {
@@ -123,51 +123,34 @@ function buildGeometry() {
       x = Math.cos(sectorAngle) * cilinRadius;
       y = Math.sin(sectorAngle) * cilinRadius;
 
-      if (j == 0) {
+      if (j == 0) { // cerchio con normali cerchio
         z = -5;
         vert3[indexcil] = [
-          x,
-          y,
-          z,
-          0,
-          0,
-          -1,
+          x, y, z,
+          0, 0,-1,
           0.875 + Math.cos(sectorAngle) * 0.125,
           0.875 + Math.sin(sectorAngle) * 0.125,
         ];
-      } else if (j == 1) {
+      } else if (j == 1) { // cerchio con normali laterali
         z = -5;
         vert3[indexcil] = [
-          x,
-          y,
-          z,
+          x,y,z,
           Math.cos(sectorAngle),
           Math.sin(sectorAngle),
-          0,
-          0.5 + (0.5 / sectorCount) * i,
-          0.5,
+          0, 0.5 + (0.5 / sectorCount) * i, 0.5,
         ];
-      } else if (j == 2) {
+      } else if (j == 2) { // secondo cerchio con normali laterali ad altezza h
         z = height;
         vert3[indexcil] = [
-          x,
-          y,
-          z,
+          x,y,z,
           Math.cos(sectorAngle),
           Math.sin(sectorAngle),
-          0,
-          0.5 + (0.5 / sectorCount) * i,
-          0.75,
+          0, 0.5 + (0.5 / sectorCount) * i, 0.75,
         ];
-      } else {
+      } else { // secondo cerchio con normali cerchio ad altezza h
         z = height;
         vert3[indexcil] = [
-          x,
-          y,
-          z,
-          0,
-          0,
-          1,
+          x,y,z,0,0,1,
           0.625 + Math.cos(sectorAngle) * 0.125,
           0.875 + Math.sin(sectorAngle) * 0.125,
         ];

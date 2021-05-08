@@ -7,10 +7,10 @@
 // this function returns the world matrix with the updated rotations.
 // parameters rvx, rvy and rvz contains a value in the degree that how much the object rotates in the given direction.
 
-Pitch = 0;
-Yaw = 0;
-Roll = 0;
-quat = Quaternion(0, 0, 0, 0);
+var Pitch = 0;
+var Yaw = 0;
+var Roll = 0;
+var quat = Quaternion(0, 0, 0, 0);
 
 function updateWorld(rvx, rvy, rvz) {
 
@@ -35,10 +35,13 @@ function euToquat(yaw, pitch, roll) {
 	sp = Math.sin(pitchRad * 0.5);
 	cr = Math.cos(rollRad * 0.5);
 	sr = Math.sin(rollRad * 0.5);
-	//new quaternion. i could use quat.add(yawRad,...)
+
+
+	//new quaternion. i could use quat.mul(yawRad,...)
+
 	// var newquat = Quaternion.fromEuler(yawRad,pitchRad,rollRad, order= "ZXY" );
-	// //quat = quat.add(newquat);
-	// quat = newquat.add(quat);
+	// quat = newquat.mul(quat);
+	// quat = quat.toMatrix4();
 
 	quat.w = cr * cp * cy - sr * sp * sy;
 	quat.x = sr * cp * cy - cr * sp * sy;
@@ -48,6 +51,7 @@ function euToquat(yaw, pitch, roll) {
 	this.makeRotQuat();
 
 }
+// da quaternion a matrice world
 
 function makeRotQuat() {
 	var rotMatrix = quat.toMatrix4();

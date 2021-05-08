@@ -156,39 +156,40 @@ function buildGeometry() {
   addMesh(vert2, ind2, color2);
 
   // Draws function y = sin(x) * cos(z) with -3 <= x <= 3 and -3 <= z <= 3 -- To do for the assignment.
-  var vert3 = [];
-  var ind3 = [];
-  var color3 = [0.0, 1.0, 1.0];
-  var count = 0;
 
-  for (i = 0; i <= 6; i++) {
-    for (j = 0; j <= 6; j++) {
-      x = i - 3;
-      z = j - 3;
-      vert3[i * 7 + j] = [
+  var verticesFunct = [];
+  var indFunct = [];
+  const colorFunct = [0.0, 0.0, 1.0];
+
+  var nPointsPerRow = 50;
+  var converter = 1/(nPointsPerRow/2) * 3;
+
+  for (i = 0; i < nPointsPerRow; i++) {
+    for (j = 0; j < nPointsPerRow; j++) {
+      x = (i - nPointsPerRow/2)* converter;
+      z = (j - nPointsPerRow/2)* converter;
+      verticesFunct[i * nPointsPerRow + j] = [
         x,
         Math.cos(z) * Math.sin(x),
         z,
         -Math.sin(z) * Math.sin(x),
         1,
-        Math.cos(z) * Math.cos(x),
-      ];
-      //vert3[i * 7 + j] = [x, 0, z];
+        Math.cos(z) * Math.cos(x)];
     }
   }
 
-  for (i = 0; i < 6; i++) {
-    for (j = 0; j < 6; j++) {
-      ind3[count] = i * 7 + j;
-      ind3[count + 1] = (i + 1) * 7 + j;
-      ind3[count + 2] = (i + 1) * 7 + j + 1;
-      ind3[count + 3] = i * 7 + j;
-      ind3[count + 4] = (i + 1) * 7 + j + 1;
-      ind3[count + 5] = i * 7 + j + 1;
-      count = count + 6;
+  for (i = 0; i < nPointsPerRow-1; i++) {
+    for (j = 0; j < nPointsPerRow-1; j++) {
+      indFunct[6*(i * nPointsPerRow + j)] = i * nPointsPerRow + j;
+      indFunct[6*(i * nPointsPerRow + j) + 1] = (i + 1) * nPointsPerRow + j+ 1;
+      indFunct[6*(i * nPointsPerRow + j) + 2] = (i + 1) * nPointsPerRow + j ;
+      indFunct[6*(i * nPointsPerRow + j) + 3] = i * nPointsPerRow + j;
+      indFunct[6*(i * nPointsPerRow + j) + 4] = i * nPointsPerRow + j + 1;
+      indFunct[6*(i * nPointsPerRow + j) + 5] = (i + 1) * nPointsPerRow + j + 1;
+      
     }
   }
-  addMesh(vert3, ind3, color3);
+  addMesh(verticesFunct, indFunct, colorFunct);
 
   // Draws a Cylinder --- To do for the assignment
   var vert4 = [];
@@ -292,8 +293,7 @@ function buildGeometry() {
           Math.cos((2 * Math.PI * n) / verticalLines),
         Math.cos((Math.PI * m) / horizontalLines),
         Math.sin((Math.PI * m) / horizontalLines) *
-          Math.sin((2 * Math.PI * n) / verticalLines) *
-          0,
+          Math.sin((2 * Math.PI * n) / verticalLines),
       ];
       index++;
     }

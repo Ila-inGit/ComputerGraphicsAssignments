@@ -1,9 +1,5 @@
 function world() {
 	// Positioned in 0,0,-3. Yaw=90, Pitch and Roll = 0
-	var A1 =  [1.0, 0.0, 0.0, 0.0,
-			   0.0, 1.0, 0.0, 0.0,
-			   0.0, 0.0, 1.0, 0.0,
-			   0.0, 0.0, 0.0, 1.0];
 	
     A1 = utils.MakeTranslateMatrix(0,0,-3);
     A2 = utils.MakeRotateYMatrix(90);
@@ -12,10 +8,6 @@ function world() {
 
     
 	// Positioned in 0,2,0. Yaw=0, Pitch = 60, Roll = 0, 1/10th of size
-	var B1 =  [1.0, 0.0, 0.0, 0.0,
-			   0.0, 1.0, 0.0, 0.0,
-			   0.0, 0.0, 1.0, 0.0,
-			   0.0, 0.0, 0.0, 1.0];
 	B1 = utils.MakeTranslateMatrix(0,2,0);
     B2 = utils.MakeRotateXMatrix(60);
     B3 = utils.MakeScaleMatrix(0.1);
@@ -25,20 +17,13 @@ function world() {
                
 
 	// Positioned in 0,0,0. Yaw=30, Pitch = 0 Roll = 45
-	var C1 =  [1.0, 0.0, 0.0, 0.0,
-			   0.0, 1.0, 0.0, 0.0,
-			   0.0, 0.0, 1.0, 0.0,
-			   0.0, 0.0, 0.0, 1.0];
-	
+
     C1 = utils.MakeRotateYMatrix(30);
     C2 = utils.MakeRotateZMatrix(45);
     C1C2 = utils.multiplyMatrices(C1,C2);           
 
 	// Positioned in 2,0,2. Yaw=180, Pitch and Roll = 0, two times wider
-	var D4 =  [1.0, 0.0, 0.0, 0.0,
-			   0.0, 1.0, 0.0, 0.0,
-			   0.0, 0.0, 1.0, 0.0,
-			   0.0, 0.0, 0.0, 1.0];
+
     D1 = utils.MakeTranslateMatrix(2,0,2);
     D2 = utils.MakeRotateYMatrix(180);
     D3 = utils.MakeScaleNuMatrix(2,1,1)
@@ -47,10 +32,7 @@ function world() {
     D1D2D3 = utils.multiplyMatrices(D1D2,D3);
 
     // Positioned in 1,-1,2.5. Yaw=-30, Pitch = 45 Roll = -15, Scaled with the following factors: 0.8 (x), 0.75 (y), 1.2 (z)
-	var E5 =  [1.0, 0.0, 0.0, 0.0,
-			   0.0, 1.0, 0.0, 0.0,
-			   0.0, 0.0, 1.0, 0.0,
-			   0.0, 0.0, 0.0, 1.0];
+
     E1 = utils.MakeTranslateMatrix(1,-1,2.5);
     E2 = utils.MakeRotateYMatrix(-30);
     E3 = utils.MakeRotateXMatrix(45);
