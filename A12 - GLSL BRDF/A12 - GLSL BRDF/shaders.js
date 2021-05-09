@@ -60,7 +60,6 @@ function shaders() {
 `;
 
   // Ambient and Phong specular. No emssion and no diffuse.
-  // non funziona l'ambient...
   var S3 = `
 
 	vec4 PspecA = pow(clamp(dot(eyedirVec, -reflect(lightDirA, normalVec) ), 0.0, 1.0),SpecShine) * lightColorA;

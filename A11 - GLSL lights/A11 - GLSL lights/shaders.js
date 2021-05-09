@@ -37,6 +37,7 @@ function shaders() {
 // Single directional light, constant ambient
 var S1 = `
 	OlightDir = Dir;
+	
 	OlightColor = lightColor;
 	
 	ambientColor = ambientLightColor;
@@ -45,17 +46,15 @@ var S1 = `
 // Single point light without decay
 var S2 = `
 	OlightDir = normalize(Pos - fs_pos);
+
 	OlightColor = lightColor;
 `;
 
 // Single spot light (without decay), constant ambient
-// OlightColor = lightColor *
-// 		clamp(( dot(normalize(Pos - fs_pos), normalize(-Dir)) - radians(ConeOut) ) / 
-// 						( radians(ConeOut) - radians(ConeIn * ConeOut)),0.0, 1.0);
-
 
 var S3 = `
     OlightDir = normalize(Pos - fs_pos);
+
 	OlightColor = lightColor *
 		clamp(( dot(normalize(Pos - fs_pos), Dir) - cos(radians(ConeOut)) ) / 
 			(cos(radians(ConeIn * ConeOut)) - cos(radians(ConeOut))), 0.0, 1.0);
@@ -65,19 +64,22 @@ var S3 = `
 // Single point light with decay
 // vect3 L = Pos - fs_pos
 //float distance = length(Pos - fs_pos)
-//OlightColor = lightColor * (1.0f / (1.0f + Decay * length(Pos - fs_pos)+ Decay * length(Pos - fs_pos)* length(Pos - fs_pos) )) ;
 
 var S4 = `
 	OlightDir = normalize(Pos - fs_pos);
+
 	OlightColor = lightColor * pow( Target / length(Pos - fs_pos), Decay ) ;
 `;
 
 // Single spot light (with decay)
 var S5 = `
 	OlightDir = normalize(Pos - fs_pos);
+
+	vec3 spotLightDir = normalize(Pos - fs_pos);	//-> normalize distance
+	float dotProd = dot( spotLightDir , Dir);	//-> cosine angle between vectors (dot product)
 	OlightColor = lightColor *
-				clamp(( dot(normalize(Pos - fs_pos), Dir) - cos(radians(ConeOut)) ) / 
-							(cos(radians(ConeIn * ConeOut)) - cos(radians(ConeOut))), 0.0, 1.0) *
+				clamp(( dotProd - cos(radians(ConeOut/2.0)) ) / 
+							(cos(radians(ConeIn * ConeOut / 2.0)) - cos(radians(ConeOut /2.0))), 0.0, 1.0) *
 				pow( Target / length(Pos - fs_pos), Decay ) ;
 `;
 
@@ -90,20 +92,28 @@ var S5 = `
 var S6 = `
 
 	OlightDir = normalize(Pos - fs_pos);
+
 	OlightColor = lightColor;
-	ambientColor = mix(ambientLightColor, ambientLightLowColor,
-		0.5 + 0.5 * dot(normalVec, ADir));
+
+	vec4 mainEmisphere = (0.5 + 0.5 * dot(normalVec, ADir))* ambientLightColor;
+	vec4 secondEmisphere = (0.5 - 0.5 * dot(normalVec, ADir))* ambientLightLowColor;
+	ambientColor = mainEmisphere + secondEmisphere;
 
 `;
 
 // Single spot light, spherical harmonics ambient
 var S7 = `
 	OlightDir = normalize(Pos - fs_pos);
-	OlightColor = lightColor *
-		clamp(( dot(normalize(Pos - fs_pos), Dir) - cos(radians(ConeOut)) ) / 
-			(cos(radians(ConeIn * ConeOut)) - cos(radians(ConeOut))), 0.0, 1.0);
 	
-	ambientColor = SHconstColor + normalVec.x*SHDeltaLxColor + normalVec.y*SHDeltaLyColor + normalVec.z*SHDeltaLzColor;	
+	vec3 spotLightDir = normalize(Pos - fs_pos);	//-> normalize distance
+	float dotProd = dot( spotLightDir , Dir);	//-> cosine angle between vectors (dot product)
+	OlightColor = lightColor *
+				clamp(( dotProd - cos(radians(ConeOut/2.0)) ) / 
+							(cos(radians(ConeIn * ConeOut / 2.0)) - cos(radians(ConeOut /2.0))), 0.0, 1.0) *
+				pow( Target / length(Pos - fs_pos), Decay ) ;
+
+	//-> normalVec vettore normale alla superficie
+	ambientColor = SHconstColor + normalVec.x * SHDeltaLxColor + normalVec.y * SHDeltaLyColor + normalVec.z * SHDeltaLzColor;	
 `;
 	return [S1, S2, S3, S4, S5, S6, S7];
 }
