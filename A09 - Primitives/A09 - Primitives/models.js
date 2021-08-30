@@ -1,5 +1,11 @@
+// “T” for triangles lists
+// “S” for triangles strips
+// “F” for triangles fans
+// “L” for lines lists
+// “P” for lines strips
+// “O” for line loops
+
 function buildGeometry() {
-	var i;
 	
 	// Draws the outline of letter F (replace the vertices and primitive type)
 	var vert1 = [[0.0,-4.0,0.0], [3.0,-4.0,0.0], [3.0,0.0,0.0], [5.0,0.0,0.0], 
@@ -22,9 +28,3 @@ function buildGeometry() {
 
 	addMesh(vert3, "F", [0.95, 1.0, 0.0]);
 }
-// “T” for triangles lists
-// “S” for triangles strips
-// “F” for triangles fans
-// “L” for lines lists
-// “P” for lines strips
-// “O” for line loops

@@ -1,3 +1,4 @@
+// tutte in funzione dell'istante t in cui viene richiamata la funzione
 function Anim1(t) {
   // moving car
   //scale x 1/4 as it is divided by for main blocks
@@ -24,8 +25,6 @@ function Anim2(t) {
 
 function Anim3(t) {
   // rotating fan
-  //var C1 = utils.MakeScaleMatrix(0.25);
-  //var C2 = utils.MakeTranslateMatrix(2, 3, 0);
 
   var C1 = utils.MakeTranslateMatrix(0.62, 0.88, 0);
   var C2 = utils.MakeRotateYMatrix(90);
@@ -51,6 +50,7 @@ function Anim4(t) {
   var D1 = utils.MakeScaleMatrix(1 / 16);
 
   var o = Math.floor(32 * t) % 12;
+  //più preciso sarà il numero con la virgola e meno approssimazione nella posizione della fiamma ci sarà
   o = 0.01 + o * 0.0833333333333333333333333333;
   var v = Math.floor(24 * t) % 6;
   v = 0.01 + (5 - v) * 0.0833333333333333333333333333;

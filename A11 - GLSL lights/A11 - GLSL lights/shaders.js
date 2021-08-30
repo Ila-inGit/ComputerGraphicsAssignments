@@ -23,6 +23,9 @@ function shaders() {
 //vec3 normalVec;				// direction of the normal vector to the surface
 //
 //
+
+
+
 // Final direction and colors are returned into:
 //vec3 OlightDir;
 //
@@ -56,8 +59,12 @@ var S3 = `
     OlightDir = normalize(Pos - fs_pos);
 
 	OlightColor = lightColor *
-		clamp(( dot(normalize(Pos - fs_pos), Dir) - cos(radians(ConeOut)) ) / 
-			(cos(radians(ConeIn * ConeOut)) - cos(radians(ConeOut))), 0.0, 1.0);
+		clamp(
+				( dot(normalize(Pos - fs_pos), Dir) - cos(radians(ConeOut)) ) 
+				/ 
+				(cos(radians(ConeIn * ConeOut)) - cos(radians(ConeOut)))
+			, 0.0, 1.0);
+
 	ambientColor = ambientLightColor;
 `;
 
@@ -68,7 +75,12 @@ var S3 = `
 var S4 = `
 	OlightDir = normalize(Pos - fs_pos);
 
-	OlightColor = lightColor * pow( Target / length(Pos - fs_pos), Decay ) ;
+	OlightColor = lightColor * 
+		pow( 
+			   Target 
+				/ 
+			   length(Pos - fs_pos) 
+			,Decay ) ;
 `;
 
 // Single spot light (with decay)
@@ -77,10 +89,18 @@ var S5 = `
 
 	vec3 spotLightDir = normalize(Pos - fs_pos);	//-> normalize distance
 	float dotProd = dot( spotLightDir , Dir);	//-> cosine angle between vectors (dot product)
+	
 	OlightColor = lightColor *
-				clamp(( dotProd - cos(radians(ConeOut/2.0)) ) / 
-							(cos(radians(ConeIn * ConeOut / 2.0)) - cos(radians(ConeOut /2.0))), 0.0, 1.0) *
-				pow( Target / length(Pos - fs_pos), Decay ) ;
+				clamp(	
+					    ( dotProd - cos(radians(ConeOut/2.0)) ) 
+						 / 
+						(cos(radians(ConeIn * ConeOut / 2.0)) - cos(radians(ConeOut /2.0))) 
+					,0.0, 1.0) *
+				pow( 
+					   Target 
+						/ 
+					   length(Pos - fs_pos)
+					, Decay ) ;
 `;
 
 // Single point light, hemispheric ambient 
@@ -108,9 +128,16 @@ var S7 = `
 	vec3 spotLightDir = normalize(Pos - fs_pos);	//-> normalize distance
 	float dotProd = dot( spotLightDir , Dir);	//-> cosine angle between vectors (dot product)
 	OlightColor = lightColor *
-				clamp(( dotProd - cos(radians(ConeOut/2.0)) ) / 
-							(cos(radians(ConeIn * ConeOut / 2.0)) - cos(radians(ConeOut /2.0))), 0.0, 1.0) *
-				pow( Target / length(Pos - fs_pos), Decay ) ;
+				clamp(
+					    ( dotProd - cos(radians(ConeOut/2.0)) ) 
+						 / 
+						(cos(radians(ConeIn * ConeOut / 2.0)) - cos(radians(ConeOut /2.0)))
+					,0.0, 1.0) *
+				pow( 
+					   Target 
+					    /
+					   length(Pos - fs_pos)
+					, Decay );
 
 	//-> normalVec vettore normale alla superficie
 	ambientColor = SHconstColor + normalVec.x * SHDeltaLxColor + normalVec.y * SHDeltaLyColor + normalVec.z * SHDeltaLzColor;	

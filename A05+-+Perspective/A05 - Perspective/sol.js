@@ -1,26 +1,23 @@
-// FOV ==> FIELD OF VIEW
-// a ==> aspect ratio dello schermo
-// n ==> near plane to the observer
-// f ==> far plane to the observer
 
 function perspective() {
   // Make perspective projection, FoV-y = 70 deg, a = 16/9, n = 1, f = 101.
 
-  var A1 = makePersp(utils.degToRad(70), 1.78, 101, 1);
+  var A1 = makePersp(utils.degToRad(70), 16/9, 101, 1);
 
   // Make perspective projection, FoV-y = 105 deg, a = 16/9, n = 1, f = 101
 
-  var A2 = makePersp(utils.degToRad(105), 1.78, 101, 1);
+  var A2 = makePersp(utils.degToRad(105), 16/9, 101, 1);
 
   // Make perspective projection, FoV-y = 40 deg, a = 16/9, n = 1, f = 101
 
-  var A3 = makePersp(utils.degToRad(40), 1.78, 101, 1);
+  var A3 = makePersp(utils.degToRad(40), 16/9, 101, 1);
 
   // Make perspective projection, FoV-y = 90 deg, a = 4/3, n = 1, f = 101. Note: since the aspect ratio is not correct, the image should appear to be deformed
 
-  var O1 = makePersp(utils.degToRad(90), 1.333, 101, 1);
+  var O1 = makePersp(utils.degToRad(90), 4/3, 101, 1);
 
-  // Make perspective projection, l = -1.2, r = 0, t = 0.3375, b = -0.3375, n = 1, f = 101. Note: due to the asimmetry of this projection, only the left part of the scene should be visible
+  // Make perspective projection, l = -1.2, r = 0, t = 0.3375, b = -0.3375, n = 1, f = 101.
+  // Note: due to the asimmetry of this projection, only the left part of the scene should be visible
 
   var O2 = makePerspSecondVersion(0, -1.2, 0.3375, -0.3375, 101, 1);
 
@@ -28,6 +25,11 @@ function perspective() {
 }
 
 // FUNZIONI AUSILIARIE
+
+// FOV ==> FIELD OF VIEW
+// a ==> ASPECT RATIO OF THE SCREEN
+// n ==> NEAR PLANE TO THE OBSERVER
+// f ==> FAR PLANE TO THE OBSERVER
 
 function makePersp(FOV, a, f, n) {
   mat = utils.identityMatrix();
@@ -40,6 +42,7 @@ function makePersp(FOV, a, f, n) {
   mat[15] = 0;
   return mat;
 }
+
 // r ==> RIGHT MARGIN
 // l ==> LEFT MARGIN
 // t ==> TOP MARGIN

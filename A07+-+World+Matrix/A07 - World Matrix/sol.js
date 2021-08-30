@@ -39,7 +39,10 @@ function world() {
     E4 = utils.MakeRotateZMatrix(-15);
     E5 = utils.MakeScaleNuMatrix(0.8,0.75,1.2);
 
-    FINAL = utils.multiplyMatrices(utils.multiplyMatrices(utils.multiplyMatrices(utils.multiplyMatrices(E1,E2),E3),E4),E5);    
+    FINAL = utils.multiplyMatrices(
+                utils.multiplyMatrices(
+                    utils.multiplyMatrices(
+                        utils.multiplyMatrices(E1,E2), E3), E4), E5);    
 
 	return [A1A2, B1B2B3, C1C2, D1D2D3, FINAL];
 }

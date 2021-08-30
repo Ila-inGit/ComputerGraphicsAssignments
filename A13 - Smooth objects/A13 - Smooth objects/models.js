@@ -33,35 +33,35 @@ function buildGeometry() {
   var color1 = [0.0, 0.0, 1.0];
   addMesh(vert1, ind1, color1);
 
-  // Draws a cube -- To do for the assignment.
+  // Draws a cube
   var vert2 = [
     
-    //done dietro
+    // faccia dietro
     [-1.0, 1.0, -1.0, 0.0, 0.0, -1.0],
     [1.0, 1.0, -1.0, 0.0, 0.0, -1.0],
     [1.0, -1.0, -1.0, 0.0, 0.0, -1.0],
     [-1.0, -1.0, -1.0, 0.0, 0.0, -1.0],
-    //done davanti
+    // faccia davanti
     [-1.0, 1.0, 1.0, 0.0, 0.0, 1.0],
     [-1.0, -1.0, 1.0, 0.0, 0.0, 1.0],
     [1.0, -1.0, 1.0, 0.0, 0.0, 1.0],
     [1.0, 1.0, 1.0, 0.0, 0.0, 1.0],
-    // done dx
+    // faccia a dx
     [1.0, 1.0, -1.0, 1.0, 0.0, 0.0],
     [1.0, 1.0, 1.0, 1.0, 0.0, 0.0],
     [1.0, -1.0, 1.0, 1.0, 0.0, 0.0],
     [1.0, -1.0, -1.0, 1.0, 0.0, 0.0],
-    // done sx
+    // faccia a sx
     [-1.0, 1.0, -1.0, -1.0, 0.0, 0.0],
     [-1.0, -1.0, -1.0, -1.0, 0.0, 0.0],
     [-1.0, -1.0, 1.0, -1.0, 0.0, 0.0],
     [-1.0, 1.0, 1.0, -1.0, 0.0, 0.0],
-    //done sopra
+    // faccia sopra
     [-1.0, 1.0, 1.0, 0.0, 1.0, 0.0],
     [1.0, 1.0, 1.0, 0.0, 1.0, 0.0],
     [1.0, 1.0, -1.0, 0.0, 1.0, 0.0],
     [-1.0, 1.0, -1.0, 0.0, 1.0, 0.0],
-    //done sotto
+    // faccia sotto
     [-1.0, -1.0, 1.0, 0.0, -1.0, 0.0],
     [-1.0, -1.0, -1.0, 0.0, -1.0, 0.0],
     [1.0, -1.0, -1.0, 0.0, -1.0, 0.0],
@@ -69,42 +69,7 @@ function buildGeometry() {
   ];
  
   var ind2 = [
-    0,
-    1,
-    2,
-    2,
-    3,
-    0,
-    4,
-    5,
-    7,
-    7,
-    5,
-    6,
-    8,
-    9,
-    11,
-    11,
-    9,
-    10,
-    12,
-    13,
-    15,
-    15,
-    13,
-    14,
-    16,
-    17,
-    19,
-    19,
-    17,
-    18,
-    20,
-    21,
-    23,
-    23,
-    21,
-    22,
+    0,1,2,2,3,0,4,5,7,7,5,6,8,9,11,11,9,10,12,13,15,15,13,14,16,17,19,19,17,18,20,21,23,23,21,22,
   ];
 
   var color2 = [0.0, 1.0, 1.0];
@@ -146,11 +111,12 @@ function buildGeometry() {
   }
   addMesh(verticesFunct, indFunct, colorFunct);
 
-  // Draws a Cylinder --- To do for the assignment
+  // Draws a Cylinder
   var vert4 = [];
   var ind4 = [];
   var color4 = [1.0, 1.0, 0.0];
 
+  //variabili per rendere personalizzabile il cilindro
   let sectorSteps = (2 * Math.PI) / sectorCount;
   let sectorAngle = 0;
 
@@ -170,9 +136,7 @@ function buildGeometry() {
       } else if (j == 1) {
         z = 0;
         vert4[indexcil] = [
-          x,
-          y,
-          z,
+          x,y,z,
           Math.cos(sectorAngle),
           Math.sin(sectorAngle),
           0,
@@ -180,9 +144,7 @@ function buildGeometry() {
       } else if (j == 2) {
         z = height;
         vert4[indexcil] = [
-          x,
-          y,
-          z,
+          x,y,z,
           Math.cos(sectorAngle),
           Math.sin(sectorAngle),
           0,
@@ -241,14 +203,10 @@ function buildGeometry() {
         radius;
 
       vert5[index] = [
-        x,
-        y,
-        z,
-        Math.sin((Math.PI * m) / horizontalLines) *
-          Math.cos((2 * Math.PI * n) / verticalLines),
+        x,y,z,
+        Math.sin((Math.PI * m) / horizontalLines) * Math.cos((2 * Math.PI * n) / verticalLines),
         Math.cos((Math.PI * m) / horizontalLines),
-        Math.sin((Math.PI * m) / horizontalLines) *
-          Math.sin((2 * Math.PI * n) / verticalLines),
+        Math.sin((Math.PI * m) / horizontalLines) * Math.sin((2 * Math.PI * n) / verticalLines),
       ];
       index++;
     }

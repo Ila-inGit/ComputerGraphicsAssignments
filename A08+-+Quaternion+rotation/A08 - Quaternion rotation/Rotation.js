@@ -7,6 +7,8 @@
 // this function returns the world matrix with the updated rotations.
 // parameters rvx, rvy and rvz contains a value in the degree that how much the object rotates in the given direction.
 
+//parametri globali cambiati di volta in volta dalla funzione this.makeRotQuat()
+
 var Pitch = 0;
 var Yaw = 0;
 var Roll = 0;
@@ -25,6 +27,7 @@ function updateWorld(rvx, rvy, rvz) {
 
 function euToquat(yaw, pitch, roll) {
 
+	// trasformazione in radianti
 	yawRad = (Math.PI / 180) * yaw;
 	pitchRad = (Math.PI / 180) * pitch;
 	rollRad = (Math.PI / 180) * roll;
@@ -51,7 +54,8 @@ function euToquat(yaw, pitch, roll) {
 	this.makeRotQuat();
 
 }
-// da quaternion a matrice world
+
+// funzione per ritornare da quaternion a matrice world calcolando Yaw-Pitch-Roll
 
 function makeRotQuat() {
 	var rotMatrix = quat.toMatrix4();

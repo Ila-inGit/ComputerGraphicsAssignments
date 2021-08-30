@@ -1,5 +1,6 @@
 function move() {
-  // Rotate 60 degrees around an arbitrary axis passing through (0,1,-1). The x-axis can be aligned to the arbitrary axis after a rotation of 45 degrees around the z-axis, and then 15 degrees around the y-axis.
+  // Rotate 60 degrees around an arbitrary axis passing through (0,1,-1). 
+  // The x-axis can be aligned to the arbitrary axis after a rotation of 45 degrees around the z-axis, and then 15 degrees around the y-axis.
 
   R1 = utils.MakeRotateZMatrix(45);
   R2 = utils.MakeRotateYMatrix(15);

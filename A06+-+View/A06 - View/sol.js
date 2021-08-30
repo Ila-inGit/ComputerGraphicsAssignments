@@ -9,7 +9,7 @@ function view() {
 
   A1A2 = utils.multiplyMatrices(A1, A2);
   A1A2A3 = utils.multiplyMatrices(A1A2, A3);
-// INVERTO ALLA FINE INVECE DI FARE LE INVERSE DI TUTTE LE MATRICI 
+  // INVERTO ALLA FINE INVECE DI FARE LE INVERSE DI TUTTE LE MATRICI 
   A3A2A1 = utils.invertMatrix(A1A2A3);
 
   // Make a Look-In-Direction matrix centered at (0,-1,-5), angled 170 degrees, with an elevation of 15 degrees, and a roll of 45 degrees.
@@ -45,8 +45,10 @@ function view() {
 }
 
 // FUNZIONE AUSILIARIA
-// c ==> POSIZIONE TELECAMERA
-// a ==> POSIZIONE TARGET 
+
+// c ==> CAMERA POSITION
+// a ==> TARGET POSITION
+// UP ==> UP VECTOR
 
 function makeLookAtMatrix(c, a, up) {
   vz = utils.normalizeVector3([c[0] - a[0], c[1] - a[1], c[2] - a[2]]);
